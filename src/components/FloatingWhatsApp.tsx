@@ -1,7 +1,8 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import { X } from "lucide-react";
+import { X, MessageCircle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { QuickMessageModal } from "./QuickMessageModal";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const NeonIcon3D = lazy(() =>
 	import("./NeonIcon3D").then((mod) => ({ default: mod.NeonIcon3D })),
@@ -10,6 +11,7 @@ const NeonIcon3D = lazy(() =>
 export const FloatingWhatsApp: React.FC = () => {
 	const [showTooltip, setShowTooltip] = useState<boolean>(true);
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const isMobile = useIsMobile();
 
 	// Ocultar automaticamente no mobile após alguns segundos para não atrapalhar a navegação
 	useEffect(() => {
@@ -62,7 +64,13 @@ export const FloatingWhatsApp: React.FC = () => {
 							</div>
 						}
 					>
-						<NeonIcon3D onClick={() => setIsModalOpen(true)} />
+						{isMobile ? (
+							<div className="w-14 h-14 rounded-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.3)] flex items-center justify-center text-white">
+								<MessageCircle className="w-6 h-6" />
+							</div>
+						) : (
+							<NeonIcon3D onClick={() => setIsModalOpen(true)} />
+						)}
 					</Suspense>
 				</motion.button>
 			</div>

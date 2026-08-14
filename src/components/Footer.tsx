@@ -55,11 +55,22 @@ export const Footer: React.FC = () => {
 
 				<div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
 					<p className="text-xs text-[#737373]">
-						&copy; {new Date().getFullYear()} Tiago Santos da Silva. Todos os direitos reservados.
+						&copy; {new Date().getFullYear()} Tiago Santos da Silva. Todos os
+						direitos reservados.
 					</p>
 					<div className="flex items-center gap-4 text-xs text-[#737373]">
-						<a href="#termos" className="hover:text-[#EDEDED] transition-colors">Termos de Uso</a>
-						<a href="#privacidade" className="hover:text-[#EDEDED] transition-colors">Política de Privacidade</a>
+						<a
+							href="#termos"
+							className="hover:text-[#EDEDED] transition-colors"
+						>
+							Termos de Uso
+						</a>
+						<a
+							href="#privacidade"
+							className="hover:text-[#EDEDED] transition-colors"
+						>
+							Política de Privacidade
+						</a>
 					</div>
 				</div>
 			</div>

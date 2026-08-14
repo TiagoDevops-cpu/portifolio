@@ -11,6 +11,7 @@ import { ContactSection } from "./components/ContactSection";
 import { Footer } from "./components/Footer";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
 import { FadeIn } from "./components/FadeIn";
+import { useIsMobile } from "./hooks/useIsMobile";
 
 const ThreeBackground = lazy(() =>
 	import("./components/ThreeBackground").then((mod) => ({
@@ -19,11 +20,15 @@ const ThreeBackground = lazy(() =>
 );
 
 export default function App() {
+	const isMobile = useIsMobile();
+
 	return (
 		<div className="min-h-screen bg-[#050505] text-[#EDEDED] bg-grid-pattern relative selection:bg-[#262626] selection:text-white overflow-x-hidden">
-			<Suspense fallback={<div className="fixed inset-0 z-0 bg-[#050505]" />}>
-				<ThreeBackground />
-			</Suspense>
+			{!isMobile && (
+				<Suspense fallback={<div className="fixed inset-0 z-0 bg-[#050505]" />}>
+					<ThreeBackground />
+				</Suspense>
+			)}
 
 			<Header />
 
