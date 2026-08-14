@@ -1,60 +1,66 @@
-import React from 'react';
-import { Header } from './components/Header';
-import { Hero } from './components/Hero';
-import { AboutSection } from './components/AboutSection';
-import { SkillsSection } from './components/SkillsSection';
-import { ProjectsSection } from './components/ProjectsSection';
-import { ServicesSection } from './components/ServicesSection';
-import { WhyChooseMe } from './components/WhyChooseMe';
-import { InteractiveSimulator } from './components/InteractiveSimulator';
-import { ContactSection } from './components/ContactSection';
-import { Footer } from './components/Footer';
-import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import React, { Suspense, lazy } from "react";
+import { Header } from "./components/Header";
+import { Hero } from "./components/Hero";
+import { AboutSection } from "./components/AboutSection";
+import { SkillsSection } from "./components/SkillsSection";
+import { ProjectsSection } from "./components/ProjectsSection";
+import { ServicesSection } from "./components/ServicesSection";
+import { WhyChooseMe } from "./components/WhyChooseMe";
+import { InteractiveSimulator } from "./components/InteractiveSimulator";
+import { ContactSection } from "./components/ContactSection";
+import { Footer } from "./components/Footer";
+import { FloatingWhatsApp } from "./components/FloatingWhatsApp";
+import { FadeIn } from "./components/FadeIn";
+
+const ThreeBackground = lazy(() =>
+	import("./components/ThreeBackground").then((mod) => ({
+		default: mod.ThreeBackground,
+	})),
+);
 
 export default function App() {
-  return (
-    <div className="min-h-screen bg-[#050505] text-[#E0E0E0] bg-grid-pattern relative selection:bg-violet-600 selection:text-white overflow-hidden">
-      
-      {/* Background Radial Glow Effects */}
-      <div className="fixed top-[-10%] left-[-10%] w-[600px] h-[600px] glow-purple pointer-events-none z-0 opacity-70"></div>
-      <div className="fixed bottom-[-10%] right-[-10%] w-[700px] h-[700px] bg-radial-glow-bottom pointer-events-none z-0 opacity-60"></div>
+	return (
+		<div className="min-h-screen bg-[#050505] text-[#EDEDED] bg-grid-pattern relative selection:bg-[#262626] selection:text-white overflow-x-hidden">
+			<Suspense fallback={<div className="fixed inset-0 z-0 bg-[#050505]" />}>
+				<ThreeBackground />
+			</Suspense>
 
-      {/* Header Fixo */}
-      <Header />
+			<Header />
 
-      {/* Conteúdo Principal do Portfólio de Tiago Santos da Silva */}
-      <main className="relative z-10">
-        {/* Banner Principal / Hero */}
-        <Hero />
+			<main className="relative z-10 flex flex-col gap-24 py-16">
+				<Hero />
 
-        {/* Seção Sobre Mim */}
-        <AboutSection />
+				<FadeIn>
+					<AboutSection />
+				</FadeIn>
 
-        {/* Seção de Habilidades & Tecnologias */}
-        <SkillsSection />
+				<FadeIn>
+					<SkillsSection />
+				</FadeIn>
 
-        {/* Seção de Projetos / Portfólio */}
-        <ProjectsSection />
+				<FadeIn>
+					<ProjectsSection />
+				</FadeIn>
 
-        {/* Seção de Serviços & Soluções */}
-        <ServicesSection />
+				<FadeIn>
+					<ServicesSection />
+				</FadeIn>
 
-        {/* Por Que Me Escolher */}
-        <WhyChooseMe />
+				<FadeIn>
+					<WhyChooseMe />
+				</FadeIn>
 
-        {/* Simulador de Orçamento Rápido */}
-        <InteractiveSimulator />
+				<FadeIn>
+					<InteractiveSimulator />
+				</FadeIn>
 
-        {/* Seção de Contato */}
-        <ContactSection />
-      </main>
+				<FadeIn>
+					<ContactSection />
+				</FadeIn>
+			</main>
 
-      {/* Rodapé */}
-      <Footer />
-
-      {/* Botão Flutuante do WhatsApp */}
-      <FloatingWhatsApp />
-
-    </div>
-  );
+			<Footer />
+			<FloatingWhatsApp />
+		</div>
+	);
 }

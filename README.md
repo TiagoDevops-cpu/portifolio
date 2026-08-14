@@ -1,221 +1,54 @@
-# 🚀 Portfólio - Tiago Santos da Silva
+# Portfólio 3D Interativo - Tiago
 
-**Web Designer & Desenvolvedor Full-Stack**
+Este é um portfólio web moderno, de alta performance e com experiências 3D interativas. Construído para destacar projetos, habilidades e serviços com um design limpo, tipografia cuidadosa e efeitos visuais imersivos ("glassmorphism" e luzes neon).
 
-Um portfólio profissional moderno e responsivo, construído com as tecnologias mais atuais do desenvolvimento web. Apresenta serviços, projetos, habilidades e um simulador interativo com IA.
+## 🚀 Tecnologias Utilizadas
 
----
+*   **React 18** + **TypeScript**: Base robusta e tipada para a interface de usuário.
+*   **Vite**: Ferramenta de build super rápida.
+*   **Tailwind CSS**: Estilização baseada em utilitários para um design responsivo e consistente.
+*   **Three.js & React Three Fiber (@react-three/fiber)**: Renderização 3D declarativa para o fundo animado e elementos interativos.
+*   **React Three Drei & Postprocessing**: Utilitários para câmera, controles e efeitos visuais (como o brilho Bloom/Neon).
+*   **Motion (Framer Motion)**: Animações de entrada e transições de página suaves.
+*   **Lucide React**: Ícones SVG consistentes e leves.
 
-## 📋 Índice
+## 📂 Estrutura do Projeto
 
-- [Sobre](#sobre)
-- [Tecnologias](#tecnologias)
-- [Recursos](#recursos)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Como Executar](#como-executar)
-- [Build para Produção](#build-para-produção)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Contato](#contato)
+A estrutura foi pensada para ser modular e fácil de dar manutenção:
 
----
+*   **`src/App.tsx`**: Ponto de entrada principal. Coordena o layout geral, o fundo 3D (`Suspense` para carregamento lazy) e a ordem das seções.
+*   **`src/components/`**: Contém todos os blocos visuais isolados da aplicação:
+    *   `Hero.tsx`: Seção inicial de impacto, com efeito de digitação e chamadas para ação.
+    *   `ThreeBackground.tsx`: O motor 3D do fundo, renderizando partículas e o núcleo iluminado, que reagem ao scroll e ao mouse.
+    *   `NeonIcon3D.tsx`: Componente 3D flutuante (ícone do WhatsApp) com efeitos de iluminação reativos ao "hover".
+    *   `Header.tsx`, `Footer.tsx`: Navegação e rodapé da página.
+    *   *(Outras seções)*: `AboutSection`, `ProjectsSection`, `SkillsSection`, `ServicesSection`, `ContactSection`.
+*   **`src/data/`**: Contém o arquivo `portfolioData.ts`, que centraliza as informações de texto, links, projetos e habilidades. Modifique este arquivo para atualizar o conteúdo do site sem precisar alterar a estrutura dos componentes.
 
-## 📌 Sobre
+## ✨ Principais Funcionalidades
 
-Portfólio profissional completo de Tiago Santos da Silva, showcasando:
+1.  **Fundo 3D Reativo (ThreeBackground)**: Usa a posição do scroll da página e o cursor do mouse para girar e deslocar suavemente os elementos 3D no fundo, criando paralaxe.
+2.  **Efeitos de Post-processing (Bloom)**: Utilizado para gerar o aspecto "Neon" nos fios (`wireframes`) das geometrias 3D.
+3.  **Simulador Interativo**: Uma seção lúdica para precificação e estimativa de projetos.
+4.  **Animações de Entrada (FadeIn)**: À medida que o usuário rola a página, os elementos surgem suavemente na tela usando a biblioteca Motion.
 
-- ✨ Web Design moderno e responsivo
-- 💻 Desenvolvimento Full-Stack (Frontend & Backend)
-- 🎯 Especialização em sites de alta conversão
-- 🌍 Atendimento nacional e internacional
-- 🤖 Simulador interativo com IA (Google Gemini API)
+## 🛠️ Como Executar Localmente
 
-**Localização:** Mato Grosso do Sul, Brasil
+Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
 
----
+1.  Instale as dependências:
+    ```bash
+    npm install
+    ```
 
-## 🛠️ Tecnologias
+2.  Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
 
-### Frontend
-- **React 19** - Biblioteca UI
-- **TypeScript** - Tipagem estática
-- **Tailwind CSS 4** - Estilos utilitários
-- **Vite 6** - Bundler e dev server
-- **Lucide React** - Ícones vetoriais
-- **Motion** - Animações suaves
-
-### Backend & IA
-- **Express.js** - Servidor web
-- **Google Gemini API** - Inteligência artificial
-- **Node.js** - Runtime JavaScript
-
-### Desenvolvimento
-- **ESBuild** - Compilador ultrarrápido
-- **Autoprefixer** - Compatibilidade CSS
-- **TypeScript** - Type checking
-
----
-
-## ✨ Recursos
-
-### Seções Principais
-- 🎯 **Hero** - Apresentação com efeito de digitação
-- 👤 **Sobre Mim** - Informações profissionais
-- 🛠️ **Serviços** - Pacotes de serviços oferecidos
-- 💼 **Projetos** - Portfolio de trabalhos realizados
-- 🎓 **Habilidades** - Tecnologias e competências
-- 📞 **Contato** - Formas de entrar em contato
-
-### Componentes Interativos
-- 🤖 **Simulador com IA** - Utilize a inteligência artificial para fazer perguntas
-- 💬 **WhatsApp Flutuante** - Acesso rápido ao WhatsApp
-- 📱 **Design Responsivo** - Funciona perfeitamente em todos os dispositivos
-- ⌚ **Modal de Ajuda** - Assistência integrada com IA
-
----
-
-## 📦 Pré-requisitos
-
-- **Node.js** 18+ 
-- **npm** 9+ ou **yarn**
-
----
-
-## 🔧 Instalação
-
-1. **Clone o repositório:**
-   ```bash
-   git clone https://github.com/TiagoDevops-cpu/portfolio.git
-   cd portfolio
-   ```
-
-2. **Instale as dependências:**
-   ```bash
-   npm install
-   ```
-
-3. **Configure a API Key do Gemini:**
-   - Crie um arquivo `.env.local` na raiz do projeto
-   - Adicione sua chave da API Google Gemini:
-     ```
-     VITE_GEMINI_API_KEY=sua_chave_aqui
-     ```
-   - Obtenha sua chave em: https://ai.google.dev/
-
-4. **Verifique o TypeScript:**
-   ```bash
-   npm run lint
-   ```
-
----
-
-## 🚀 Como Executar
-
-### Modo Desenvolvimento
-```bash
-npm run dev
-```
-O aplicativo estará disponível em: `http://localhost:3000`
-
-### Modo Preview (Simula produção localmente)
-```bash
-npm run preview
-```
-
----
-
-## 🏗️ Build para Produção
-
-```bash
-npm run build
-```
-
-Gera os arquivos otimizados em `/dist`
-
----
-
-## 📁 Estrutura do Projeto
-
-```
-src/
-├── components/          # Componentes React
-│   ├── Header.tsx
-│   ├── Hero.tsx
-│   ├── AboutSection.tsx
-│   ├── ServicesSection.tsx
-│   ├── ProjectsSection.tsx
-│   ├── SkillsSection.tsx
-│   ├── ContactSection.tsx
-│   ├── InteractiveSimulator.tsx
-│   ├── CodeHelpModal.tsx
-│   ├── FloatingWhatsApp.tsx
-│   ├── Footer.tsx
-│   └── ...
-├── data/               # Dados do portfólio
-│   └── portfolioData.ts
-├── types.ts            # Tipos TypeScript
-├── App.tsx             # Componente principal
-├── main.tsx            # Ponto de entrada
-└── index.css           # Estilos globais
-
-public/
-├── index.html          # HTML principal
-└── vite.config.ts      # Configuração Vite
-
-├── package.json        # Dependências
-├── tsconfig.json       # Configuração TypeScript
-└── README.md           # Este arquivo
-```
-
----
-
-## 🔗 Links Úteis
-
-- 🌐 **Website:** [Seu portfólio online]
-- 💼 **LinkedIn:** [Profile do LinkedIn](https://www.linkedin.com/in/tiago-silva-285225401)
-- 🐙 **GitHub:** [Repositórios](https://github.com/TiagoDevops-cpu)
-- 📧 **Email:** ts.devcode@gmail.com
-- 💬 **WhatsApp:** [(67) 98123-3340](https://wa.me/5567981233340)
-
----
-
-## 📝 Scripts Disponíveis
-
-| Script | Descrição |
-|--------|-----------|
-| `npm run dev` | Inicia servidor de desenvolvimento |
-| `npm run build` | Cria build otimizado para produção |
-| `npm run preview` | Visualiza o build em modo produção |
-| `npm run lint` | Verifica erros de tipo com TypeScript |
-| `npm run clean` | Limpa diretório dist |
-
----
+3.  Abra seu navegador em `http://localhost:3000` (ou a porta indicada no terminal).
 
 ## 🎨 Personalização
 
-Todos os dados do portfólio podem ser facilmente editados no arquivo:
-- **[src/data/portfolioData.ts](src/data/portfolioData.ts)**
-
-Atualize:
-- Informações pessoais
-- Foto de perfil
-- Descrições de serviços
-- Projetos realizados
-- Habilidades técnicas
-- Links de contato
-
----
-
-## 📄 Licença
-
-Este projeto é de propriedade de Tiago Santos da Silva.
-
----
-
-## 🤝 Contribuições
-
-Sugestões e feedback são bem-vindos! Entre em contato através dos links acima.
-
----
-
-**Desenvolvido com ❤️ por Tiago Santos da Silva**
+*   **Conteúdo**: Vá até `src/data/portfolioData.ts` para alterar as informações textuais, links de contato e itens de portfólio.
+*   **Cores e Fundo**: A cor base do site está definida em `src/App.tsx` (ex: `bg-[#050505]`). As luzes e cores do neon podem ser ajustadas nos arquivos `ThreeBackground.tsx` e `NeonIcon3D.tsx`.

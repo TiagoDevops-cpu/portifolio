@@ -1,295 +1,326 @@
-import React, { useState } from 'react';
-import { MessageCircle, Phone, Github, Linkedin, Mail, MapPin, Send, CheckCircle2, Clock, Sparkles } from 'lucide-react';
-import { CONTACT_INFO, getWhatsAppUrl } from '../data/portfolioData';
+import React, { useState } from "react";
+import { CONTACT_INFO, getWhatsAppUrl } from "../data/portfolioData";
+import {
+	Mail,
+	Phone,
+	MapPin,
+	Github,
+	Linkedin,
+	MessageCircle,
+	Send,
+	CheckCircle2,
+	Clock,
+	Sparkles,
+} from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 
 export const ContactSection: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    company: '',
-    service: 'Site Institucional',
-    message: ''
-  });
+	const [formData, setFormData] = useState({
+		name: "",
+		phone: "",
+		company: "",
+		service: "Site Institucional",
+		message: "",
+	});
 
-  const [submitted, setSubmitted] = useState<boolean>(false);
+	const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmitForm = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim()) return;
+	const handleSubmitForm = (e: React.FormEvent) => {
+		e.preventDefault();
 
-    // Constrói a mensagem formatada para envio no WhatsApp
-    const messageText = `Olá Tiago! Meu nome é *${formData.name}*${formData.company ? ` (Empresa: ${formData.company})` : ''}.\n\n` +
-      `📞 *Telefone:* ${formData.phone || 'Não informado'}\n` +
-      `💼 *Interesse:* ${formData.service}\n\n` +
-      `💬 *Mensagem:* ${formData.message}`;
+		setSubmitted(true);
 
-    const whatsappUrl = `https://wa.me/5567981233340?text=${encodeURIComponent(messageText)}`;
-    
-    // Abre no WhatsApp em nova aba
-    window.open(whatsappUrl, '_blank');
+		// Constrói a mensagem a partir do formulário
+		const whatsappMessage = `
+Olá Tiago! Venho através do seu portfólio. Gostaria de conversar sobre um projeto.
+*Nome:* ${formData.name || "Não informado"}
+*Telefone/Contato:* ${formData.phone || "Não informado"}
+*Empresa/Projeto:* ${formData.company || "Não informado"}
+*Serviço de Interesse:* ${formData.service}
 
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
-  };
+*Detalhes/Mensagem:*
+${formData.message || "Gostaria de mais informações sobre seus serviços."}
+    `.trim();
 
-  return (
-    <section id="contato" className="py-20 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Cabeçalho da Seção */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="skill-tag uppercase tracking-widest inline-block mb-3">
-            Vamos Tirar Seu Projeto do Papel?
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mt-1 mb-4">
-            Entre em <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-violet-500 neon-text">Contato Comercial</span>
-          </h2>
-          <p className="text-gray-400 text-base leading-relaxed">
-            Estou à disposição para analisar as necessidades da sua empresa e propor a melhor solução em desenvolvimento web. Atendimento ágil e personalizado.
-          </p>
-        </div>
+		// Redireciona para o WhatsApp após um breve delay
+		setTimeout(() => {
+			window.open(getWhatsAppUrl(whatsappMessage), "_blank");
+			setSubmitted(false);
+			setFormData({
+				name: "",
+				phone: "",
+				company: "",
+				service: "Site Institucional",
+				message: "",
+			});
+		}, 1200);
+	};
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          
-          {/* Coluna Esquerda: Canais Diretos & Redes Sociais */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Card WhatsApp Principal */}
-            <a
-              href={getWhatsAppUrl("Olá Tiago! Vi a seção de contato do seu portfólio e gostaria de solicitar um orçamento para meu projeto.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-6 rounded-2xl bg-gradient-to-r from-violet-950/80 via-fuchsia-950/60 to-black/60 border border-violet-500/40 hover:border-violet-400 transition-all duration-300 shadow-xl flex items-center justify-between group cursor-pointer glass"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
-                  <MessageCircle className="w-7 h-7 fill-emerald-400 stroke-black" />
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono uppercase font-bold text-emerald-400 tracking-wider block">
-                    Canal Principal (Atendimento Rápido)
-                  </span>
-                  <h3 className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">
-                    Falar no WhatsApp
-                  </h3>
-                  <p className="text-xs text-gray-300 font-mono mt-0.5">
-                    {CONTACT_INFO.phoneDisplay}
-                  </p>
-                </div>
-              </div>
-              <span className="w-8 h-8 rounded-full bg-emerald-500 text-black flex items-center justify-center font-bold text-sm group-hover:translate-x-1 transition-transform">
-                →
-              </span>
-            </a>
+	return (
+		<section id="contato" className="py-20 relative">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				{/* Cabeçalho */}
+				<div className="text-center max-w-3xl mx-auto mb-16">
+					<span className="text-[#A1A1A1] uppercase tracking-widest text-xs font-semibold mb-3 block">
+						Próximo Passo
+					</span>
+					<h2 className="text-3xl sm:text-4xl font-bold text-[#EDEDED] mt-1 mb-4">
+						Vamos Iniciar Seu Projeto
+					</h2>
+					<p className="text-[#737373] text-base leading-relaxed">
+						Seja para um novo site, reformulação de sistema, ou tirar uma ideia
+						do papel. Entre em contato diretamente.
+					</p>
+				</div>
 
-            {/* Card Ligação Telefônica Direct (tel:) */}
-            <a
-              href={`tel:${CONTACT_INFO.phoneRaw}`}
-              className="p-6 rounded-2xl glass border border-white/5 hover:border-violet-500/40 transition-all duration-300 flex items-center justify-between group cursor-pointer"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-xl glass border border-violet-500/30 flex items-center justify-center text-violet-400 group-hover:scale-110 transition-transform">
-                  <Phone className="w-6 h-6" />
-                </div>
-                <div>
-                  <span className="text-[10px] font-mono uppercase font-bold text-gray-400 tracking-wider block">
-                    Ligação Direta
-                  </span>
-                  <h3 className="text-base font-bold text-white group-hover:text-violet-300 transition-colors">
-                    {CONTACT_INFO.phoneDisplay}
-                  </h3>
-                  <p className="text-xs text-gray-400 mt-0.5">
-                    Clique para ligar agora
-                  </p>
-                </div>
-              </div>
-              <span className="text-xs font-mono text-violet-400 font-bold group-hover:translate-x-1 transition-transform">
-                Ligar
-              </span>
-            </a>
+				<div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+					{/* Coluna Esquerda: Formas de Contato Direto */}
+					<div className="lg:col-span-5 space-y-6">
+						{/* Box Principal de Contato (WhatsApp) */}
+						<motion.div
+							whileHover={{ scale: 1.02 }}
+							className="p-8 rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#404040] transition-colors relative overflow-hidden group"
+						>
+							<div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+								<MessageCircle className="w-32 h-32 text-emerald-500" />
+							</div>
 
-            {/* Links Sociais: GitHub & LinkedIn */}
-            <div className="grid grid-cols-2 gap-4">
-              
-              {/* GitHub */}
-              <a
-                href={CONTACT_INFO.githubUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-5 rounded-2xl glass border border-white/5 hover:border-violet-500/40 transition-all flex flex-col justify-between group"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gray-200 group-hover:text-violet-400 transition-colors">
-                    <Github className="w-5 h-5" />
-                  </div>
-                  <span className="text-[10px] text-gray-400 font-mono">github.com</span>
-                </div>
-                <div>
-                  <span className="text-xs font-bold text-white block group-hover:text-violet-300">
-                    GitHub Oficial
-                  </span>
-                  <span className="text-[11px] text-gray-400 block truncate">
-                    @TiagoDevops-cpu
-                  </span>
-                </div>
-              </a>
+							<h3 className="text-2xl font-bold text-[#EDEDED] mb-2">
+								WhatsApp Direto
+							</h3>
+							<p className="text-[#A1A1A1] text-sm mb-8 max-w-[80%]">
+								Resposta mais rápida. Clique abaixo para iniciar uma conversa
+								imediatamente com Tiago.
+							</p>
 
-              {/* LinkedIn */}
-              <a
-                href={CONTACT_INFO.linkedinUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-5 rounded-2xl glass border border-white/5 hover:border-violet-500/40 transition-all flex flex-col justify-between group"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl glass flex items-center justify-center text-violet-400 group-hover:text-fuchsia-400 transition-colors">
-                    <Linkedin className="w-5 h-5" />
-                  </div>
-                  <span className="text-[10px] text-gray-400 font-mono">linkedin.com</span>
-                </div>
-                <div>
-                  <span className="text-xs font-bold text-white block group-hover:text-violet-300">
-                    LinkedIn
-                  </span>
-                  <span className="text-[11px] text-gray-400 block truncate">
-                    Tiago Santos da Silva
-                  </span>
-                </div>
-              </a>
+							<motion.a
+								whileTap={{ scale: 0.95 }}
+								href={getWhatsAppUrl(
+									"Olá Tiago! Vi o seu portfólio e gostaria de falar sobre um projeto.",
+								)}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-md bg-white text-black hover:bg-[#EDEDED] font-bold text-sm transition-colors"
+							>
+								<MessageCircle className="w-5 h-5" />
+								<span>Conversar no WhatsApp</span>
+							</motion.a>
+						</motion.div>
 
-            </div>
+						{/* Grid de Redes e Extras */}
+						<div className="grid grid-cols-2 gap-4">
+							{/* GitHub */}
+							<motion.a
+								whileHover={{ scale: 1.05 }}
+								whileTap={{ scale: 0.95 }}
+								href={CONTACT_INFO.githubUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="p-5 rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#404040] transition-colors flex flex-col justify-between group"
+							>
+								<div className="flex items-center justify-between mb-3">
+									<div className="w-10 h-10 rounded-xl bg-[#262626] flex items-center justify-center text-[#EDEDED] group-hover:bg-[#404040] transition-colors">
+										<Github className="w-5 h-5" />
+									</div>
+								</div>
+								<div>
+									<span className="text-sm font-bold text-[#EDEDED] block group-hover:text-white">
+										GitHub Oficial
+									</span>
+									<span className="text-[11px] text-[#737373] block truncate mt-0.5">
+										@TiagoDevops-cpu
+									</span>
+								</div>
+							</motion.a>
 
-            {/* Informações Complementares */}
-            <div className="p-5 rounded-2xl glass border border-white/5 space-y-3 text-xs text-gray-300">
-              <div className="flex items-center gap-3">
-                <MapPin className="w-4 h-4 text-violet-400 shrink-0" />
-                <span>{CONTACT_INFO.location}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <Clock className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Atendimento: Segunda a Sábado (Respostas em até 1h)</span>
-              </div>
-              <a
-                href={`mailto:${CONTACT_INFO.email}`}
-                className="flex items-center gap-3 hover:text-amber-300 transition-colors"
-              >
-                <Mail className="w-4 h-4 text-amber-400 shrink-0" />
-                <span>{CONTACT_INFO.email}</span>
-              </a>
-            </div>
+							{/* LinkedIn */}
+							<motion.a
+								whileHover={{ scale: 1.05 }}
+								whileTap={{ scale: 0.95 }}
+								href={CONTACT_INFO.linkedinUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="p-5 rounded-2xl bg-[#141414] border border-[#262626] hover:border-[#404040] transition-colors flex flex-col justify-between group"
+							>
+								<div className="flex items-center justify-between mb-3">
+									<div className="w-10 h-10 rounded-xl bg-[#262626] flex items-center justify-center text-[#EDEDED] group-hover:bg-[#404040] transition-colors">
+										<Linkedin className="w-5 h-5" />
+									</div>
+								</div>
+								<div>
+									<span className="text-sm font-bold text-[#EDEDED] block group-hover:text-white">
+										LinkedIn
+									</span>
+									<span className="text-[11px] text-[#737373] block truncate mt-0.5">
+										Tiago Santos da Silva
+									</span>
+								</div>
+							</motion.a>
+						</div>
 
-          </div>
+						{/* Informações Complementares */}
+						<div className="p-5 rounded-2xl bg-[#141414] border border-[#262626] space-y-4 text-xs text-[#A1A1A1]">
+							<div className="flex items-center gap-3">
+								<MapPin className="w-4 h-4 text-[#EDEDED] shrink-0" />
+								<span>{CONTACT_INFO.location}</span>
+							</div>
+							<div className="flex items-center gap-3">
+								<Clock className="w-4 h-4 text-[#EDEDED] shrink-0" />
+								<span>Atendimento: Segunda a Sábado</span>
+							</div>
+							<a
+								href={`mailto:${CONTACT_INFO.email}`}
+								className="flex items-center gap-3 hover:text-white transition-colors"
+							>
+								<Mail className="w-4 h-4 text-[#EDEDED] shrink-0" />
+								<span>{CONTACT_INFO.email}</span>
+							</a>
+						</div>
+					</div>
 
-          {/* Coluna Direita: Formulário Direto com Redirecionamento WhatsApp */}
-          <div className="lg:col-span-7 glass border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl relative">
-            
-            <div className="mb-6">
-              <h3 className="text-xl font-bold text-white mb-1 flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-violet-400" />
-                Enviar Mensagem Rápida
-              </h3>
-              <p className="text-xs text-gray-300">
-                Preencha os campos abaixo para conversar diretamente com o Tiago sobre a demanda do seu site.
-              </p>
-            </div>
+					{/* Coluna Direita: Formulário Direto */}
+					<div className="lg:col-span-7 bg-[#141414] border border-[#262626] rounded-2xl p-6 sm:p-8 relative">
+						<div className="mb-8 border-b border-[#262626] pb-6">
+							<h3 className="text-xl font-bold text-[#EDEDED] mb-2 flex items-center gap-2">
+								<Sparkles className="w-5 h-5 text-[#EDEDED]" />
+								Enviar Mensagem Rápida
+							</h3>
+							<p className="text-sm text-[#737373]">
+								Preencha os campos abaixo para conversar diretamente com o Tiago
+								sobre a demanda do seu site.
+							</p>
+						</div>
 
-            <form onSubmit={handleSubmitForm} className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Seu Nome Completo *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="Ex: Roberto Andrade"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 transition-colors"
-                  />
-                </div>
+						<form onSubmit={handleSubmitForm} className="space-y-6">
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+								<div>
+									<label className="block text-xs font-semibold uppercase tracking-wider text-[#A1A1A1] mb-2">
+										Seu Nome Completo *
+									</label>
+									<input
+										type="text"
+										required
+										placeholder="Ex: Roberto Andrade"
+										value={formData.name}
+										onChange={(e) =>
+											setFormData({ ...formData, name: e.target.value })
+										}
+										className="w-full bg-[#050505] border border-[#262626] rounded-md px-4 py-3 text-sm text-[#EDEDED] placeholder-[#737373] focus:outline-none focus:border-[#EDEDED] transition-colors"
+									/>
+								</div>
+								<div>
+									<label className="block text-xs font-semibold uppercase tracking-wider text-[#A1A1A1] mb-2">
+										WhatsApp ou Telefone
+									</label>
+									<input
+										type="text"
+										placeholder="Ex: (11) 99999-9999"
+										value={formData.phone}
+										onChange={(e) =>
+											setFormData({ ...formData, phone: e.target.value })
+										}
+										className="w-full bg-[#050505] border border-[#262626] rounded-md px-4 py-3 text-sm text-[#EDEDED] placeholder-[#737373] focus:outline-none focus:border-[#EDEDED] transition-colors"
+									/>
+								</div>
+							</div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Seu WhatsApp ou Telefone
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Ex: (11) 99999-9999"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 transition-colors"
-                  />
-                </div>
-              </div>
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+								<div>
+									<label className="block text-xs font-semibold uppercase tracking-wider text-[#A1A1A1] mb-2">
+										Nome da Empresa / Projeto
+									</label>
+									<input
+										type="text"
+										placeholder="Ex: Minha Empresa Corp"
+										value={formData.company}
+										onChange={(e) =>
+											setFormData({ ...formData, company: e.target.value })
+										}
+										className="w-full bg-[#050505] border border-[#262626] rounded-md px-4 py-3 text-sm text-[#EDEDED] placeholder-[#737373] focus:outline-none focus:border-[#EDEDED] transition-colors"
+									/>
+								</div>
+								<div>
+									<label className="block text-xs font-semibold uppercase tracking-wider text-[#A1A1A1] mb-2">
+										Tipo de Serviço Desejado
+									</label>
+									<select
+										value={formData.service}
+										onChange={(e) =>
+											setFormData({ ...formData, service: e.target.value })
+										}
+										className="w-full bg-[#050505] border border-[#262626] rounded-md px-4 py-3 text-sm text-[#EDEDED] focus:outline-none focus:border-[#EDEDED] transition-colors cursor-pointer"
+									>
+										<option value="Site Institucional">
+											Site Institucional
+										</option>
+										<option value="Landing Page de Alta Conversão">
+											Landing Page de Alta Conversão
+										</option>
+										<option value="Loja Virtual / E-Commerce">
+											Loja Virtual / E-Commerce
+										</option>
+										<option value="Sistema Web Sob Medida">
+											Sistema Web Sob Medida
+										</option>
+										<option value="Redesign / Otimização de Site Existente">
+											Redesign / Otimização de Site Existente
+										</option>
+									</select>
+								</div>
+							</div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Nome da Empresa / Projeto
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Ex: Minha Empresa Corp"
-                    value={formData.company}
-                    onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 transition-colors"
-                  />
-                </div>
+							<div>
+								<label className="block text-xs font-semibold uppercase tracking-wider text-[#A1A1A1] mb-2">
+									Detalhes do Projeto ou Dúvidas
+								</label>
+								<textarea
+									rows={4}
+									placeholder="Conte um pouco sobre o objetivo do seu site e como prefere que o projeto seja conduzido..."
+									value={formData.message}
+									onChange={(e) =>
+										setFormData({ ...formData, message: e.target.value })
+									}
+									className="w-full bg-[#050505] border border-[#262626] rounded-md px-4 py-3 text-sm text-[#EDEDED] placeholder-[#737373] focus:outline-none focus:border-[#EDEDED] transition-colors resize-none"
+								></textarea>
+							</div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Tipo de Serviço Desejado
-                  </label>
-                  <select
-                    value={formData.service}
-                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                    className="w-full bg-[#0a0a0f] border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-violet-500 transition-colors cursor-pointer"
-                  >
-                    <option value="Site Institucional">Site Institucional</option>
-                    <option value="Landing Page de Alta Conversão">Landing Page de Alta Conversão</option>
-                    <option value="Loja Virtual / E-Commerce">Loja Virtual / E-Commerce</option>
-                    <option value="Sistema Web Sob Medida">Sistema Web Sob Medida</option>
-                    <option value="Redesign / Otimização de Site Existente">Redesign / Otimização de Site Existente</option>
-                  </select>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-gray-300 mb-1">
-                  Detalhes do Projeto ou Dúvidas
-                </label>
-                <textarea
-                  rows={4}
-                  placeholder="Conte um pouco sobre o objetivo do seu site e como prefere que o projeto seja conduzido..."
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-violet-500 transition-colors resize-none"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:from-violet-500 hover:to-fuchsia-500 text-white font-extrabold text-sm transition-all shadow-lg shadow-violet-900/40 cursor-pointer"
-              >
-                <Send className="w-4 h-4" />
-                <span>Enviar Orçamento para o WhatsApp de Tiago</span>
-              </button>
-
-              {submitted && (
-                <div className="p-3 bg-emerald-500/20 border border-emerald-500/50 rounded-xl text-emerald-300 text-xs font-semibold flex items-center justify-center gap-2 animate-fade-in">
-                  <CheckCircle2 className="w-4 h-4" />
-                  <span>Redirecionando para o WhatsApp... Caso a janela não abra, utilize o botão acima!</span>
-                </div>
-              )}
-
-            </form>
-
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-  );
+							<motion.button
+								whileHover={{ scale: 1.02 }}
+								whileTap={{ scale: 0.98 }}
+								type="submit"
+								disabled={submitted}
+								className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-md bg-white hover:bg-[#EDEDED] text-black font-bold text-sm transition-colors relative"
+							>
+								<AnimatePresence mode="wait">
+									{submitted ? (
+										<motion.div
+											key="submitted"
+											initial={{ opacity: 0, y: 10 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, y: -10 }}
+											className="flex items-center gap-2 text-emerald-600"
+										>
+											<CheckCircle2 className="w-5 h-5" />
+											<span>Redirecionando para o WhatsApp...</span>
+										</motion.div>
+									) : (
+										<motion.div
+											key="idle"
+											initial={{ opacity: 0, y: -10 }}
+											animate={{ opacity: 1, y: 0 }}
+											exit={{ opacity: 0, y: 10 }}
+											className="flex items-center gap-2"
+										>
+											<Send className="w-4 h-4" />
+											<span>Enviar Orçamento para o WhatsApp de Tiago</span>
+										</motion.div>
+									)}
+								</AnimatePresence>
+							</motion.button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	);
 };
